@@ -60,7 +60,15 @@ export default function ARView() {
         box.setAttribute('color', '#4CC3D9');
         scene.appendChild(box);
 
-        sceneRef.current.appendChild(scene);
+        // Ensure container exists and is an HTMLDivElement
+        const container = sceneRef.current;
+        if (!container || !(container instanceof HTMLDivElement)) {
+          throw new Error('AR container not found or invalid');
+        }
+
+        // Clear any existing content first
+        container.innerHTML = '';
+        container.appendChild(scene);
         setIsLoading(false);
       } catch (err) {
         console.error('AR initialization error:', err);
